@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+captures/
+*.gif
+*.mp4
+*.jpg
+!docs/img/*.jpg
+*.stl
+.DS_Store
