@@ -9,6 +9,11 @@ camera's own Wi-Fi hotspot.
 
 > Status: design + firmware complete, hardware build in progress.
 
+<p align="center">
+  <img src="docs/images/enclosure_front.png" width="49%" alt="Enclosure, front — four bezeled lenses, grip, top-plate shutter and filter buttons">
+  <img src="docs/images/enclosure_back.png" width="49%" alt="Enclosure, back — 4.3 inch touchscreen">
+</p>
+
 ## How it works
 
 Four 16 MP camera modules sit 40 mm apart behind the faceplate. An
@@ -19,6 +24,27 @@ moving subjects from ghosting. Firmware splits the frame, auto-aligns
 the views on the subject (phase correlation), applies the selected
 filter, and writes a bounce-looped GIF. Full reasoning for every
 design decision: [docs/architecture.md](docs/architecture.md).
+
+![System wiring diagram](docs/images/system_diagram.svg)
+
+## Controller board
+
+[wigglecam-controller](https://github.com/jadenrhee/wigglecam-controller)
+is the camera's RP2040 co-processor board: it sits between the Pi 5 and
+the physical hardware and handles the real-time/analog work —
+constant-current LED flash driving with hardware-enforced safety
+limits, shutter debounce, rotary-encoder decoding, battery telemetry,
+and the camera-sync trigger — exposed to the Pi over I2C/UART.
+76 × 50 mm, 4-layer, fully routed, DRC-clean at JLCPCB limits.
+
+<p align="center">
+  <img src="docs/images/controller_board.png" width="49%" alt="Controller board, rendered top view">
+  <img src="docs/images/pcb_layout.svg" width="49%" alt="PCB routing — front copper red, back copper blue">
+</p>
+
+The schematic is code ([hardware/skidl/](https://github.com/jadenrhee/wigglecam-controller/tree/main/hardware/skidl));
+the routing view above shows front copper in red and back copper in
+blue, with the ground/power planes hidden for readability.
 
 ## Repo layout
 
