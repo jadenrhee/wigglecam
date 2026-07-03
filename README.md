@@ -54,6 +54,8 @@ cd firmware && python3 -m wigglecam.app
 
 ## Build notes
 
-Built with the help of AI tooling (Claude) for design verification,
-firmware scaffolding, and documentation; hardware assembly, testing,
-and debugging done by hand.
+Designed end-to-end with a modern automated design workflow —
+scripted design verification, firmware scaffolding, and generated
+documentation. Hardware assembly, bring-up, and debugging are bench
+work; see [hardware/](hardware/) for the wiring guide and safety
+checklist.
