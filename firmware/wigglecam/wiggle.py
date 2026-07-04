@@ -26,7 +26,7 @@ def _center_crop(img: np.ndarray, frac: float = 0.5) -> np.ndarray:
 
 def align_views(views: list[np.ndarray]) -> list[np.ndarray]:
     """Shift every view so the centre subject overlaps the reference
-    view (index 1, second from left — near the middle of the rig)."""
+    view (index 1, second from left, near the middle of the rig)."""
     ref_idx = 1
     ref = cv2.cvtColor(_center_crop(views[ref_idx]), cv2.COLOR_RGB2GRAY)
     ref = np.float32(ref)
