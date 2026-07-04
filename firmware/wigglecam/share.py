@@ -46,7 +46,7 @@ class ShareServer:
 
     def _shot(self, name):
         for p in self._gifs():
-            if p.name == name:                # whitelist lookup — no path
+            if p.name == name:                # whitelist lookup, no path
                 return send_file(p)           # traversal possible
         abort(404)
 

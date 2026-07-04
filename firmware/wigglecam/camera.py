@@ -1,7 +1,7 @@
 """Capture path: one stitched frame in, four synchronized views out.
 
 The Camarray HAT clocks all four sensors from a single source, so the
-four sub-images inside one stitched frame were exposed simultaneously —
+four sub-images inside one stitched frame were exposed simultaneously;
 no software sync is needed or possible to get wrong.
 """
 
