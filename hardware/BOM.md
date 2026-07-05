@@ -1,15 +1,5 @@
 # Bill of Materials
 
-Prices are ballpark (mid-2026, USD), so re-check before ordering. The
-parts were picked so the whole chain plugs together: one CSI port for
-all four synchronized cameras, one DSI port for the screen, and one
-battery HAT that outputs the 5.1 V / 5 A a Pi 5 actually needs.
-
-The flash + controls electronics come in two versions. **Build one,
-not both** (they claim the same Pi pins, see [wiring.md](wiring.md)):
-the **v2 controller board** (current design) or the **v1 perfboard
-circuit** (no PCB order needed; it's what the firmware drives today).
-
 ## Core electronics (both versions)
 
 | # | Part | Qty | ~Price | Why this part |
@@ -34,9 +24,6 @@ circuit** (no PCB order needed; it's what the firmware drives today).
 
 ## Flash + controls: v1 perfboard version
 
-Build this only if you're skipping the controller board. Hand-soldered
-on perfboard; the schematic is in [wiring.md](wiring.md).
-
 | # | Part | Qty | ~Price | Notes |
 |---|------|-----|--------|-------|
 | 13 | IRLZ44N logic-level N-MOSFET, TO-220 | 1 | $2 | fully on at a 3.3 V gate; our 2 A is nothing next to its 47 A rating |
@@ -56,9 +43,8 @@ on perfboard; the schematic is in [wiring.md](wiring.md).
 | 22 | Panel-mount USB-C extension (charging port) | 1 | $8 | brings the X1202's USB-C input out to the case wall |
 | 23 | Enclosure print, PETG (print service) | 2 shells | $30 | see enclosure/README.md for services |
 
-**Total: about $620 for a v2 build, about $550 for v1.** The
-difference is the assembled controller-board run replacing ~$30 of
-perfboard parts.
+Total: about $620 for a v2 build, about $550 for v1.
+
 
 ## Compatibility cross-check (why these work together)
 
