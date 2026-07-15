@@ -1,1 +1,1 @@
-"""WiggleCam — 4-lens synchronized wigglegram camera firmware."""
+"""WiggleCam: 4-lens synchronized wigglegram camera firmware."""

@@ -107,7 +107,7 @@ class WiggleCamWindow(QtWidgets.QMainWindow):
         dlg.setWindowTitle("Scan to download")
         lay = QtWidgets.QVBoxLayout(dlg)
         label = QtWidgets.QLabel()
-        qr.save("/dev/shm/wiggle_qr.png")   # tmpfs — no SD-card wear
+        qr.save("/dev/shm/wiggle_qr.png")   # tmpfs, no SD-card wear
         label.setPixmap(_load("/dev/shm/wiggle_qr.png"))
         label.setAlignment(QtCore.Qt.AlignCenter)
         lay.addWidget(label)

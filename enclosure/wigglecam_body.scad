@@ -1,5 +1,5 @@
 // ============================================================================
-// WiggleCam enclosure — parametric two-shell camera body
+// WiggleCam enclosure: parametric two-shell camera body
 //
 // Styled like a classic wide compact camera:
 //   * raised top/bottom plates with a recessed "leatherette" mid band
@@ -12,8 +12,8 @@
 //
 // PART = "assembly" shows the closed camera standing upright (preview only).
 // Set PART to "front" or "back", press F6, then File > Export STL to print.
-// Verify every dimension against your delivered parts with calipers before
-// printing — vendor drawings drift between revisions.
+// Every dimension is verified against the delivered parts with calipers
+// before printing; vendor drawings drift between revisions.
 // ============================================================================
 
 PART    = "assembly";  // "front" | "back" | "assembly"
@@ -66,7 +66,7 @@ pi_boss_d = 7; pi_boss_h = 6;
 stack_x = -30;                          // stack sits left of centre
 stack_y = 0;
 
-// ---- 4.3" DSI touchscreen (Waveshare) — MEASURE YOURS -----------------------
+// ---- 4.3" DSI touchscreen (Waveshare), MEASURE THE ACTUAL PART --------------
 scr_module_w = 122;  scr_module_h = 76;    // module outline
 scr_view_w   = 106;  scr_view_h   = 63;    // visible area cutout
 scr_hole_dx  = 114;  scr_hole_dy  = 68;    // M3 mounting pattern
@@ -255,7 +255,7 @@ module back_shell() {
 }
 
 // ============================================================================
-// assembly preview (never exported — set PART to "front"/"back" for STLs)
+// assembly preview (never exported; set PART to "front"/"back" for STLs)
 // ============================================================================
 module place_back() {                   // fold the back shell onto the front
     translate([0, 0, body_d + EXPLODE]) rotate([0, 180, 0]) children();

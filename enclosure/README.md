@@ -5,28 +5,28 @@ styled like a wide compact camera: raised top/bottom plates, bezeled
 lens rings, a hand grip on the photographer's right, a shutter button
 on the top plate, a flash window, and a raised screen bezel on the back.
 
-Open it in [OpenSCAD](https://openscad.org) (free) and press F5 — the
-default `PART = "assembly"` shows the closed camera standing upright,
-with dummy lenses/screen/button so you can sanity-check the layout.
-To print, set `PART` to `"front"` or `"back"`, press F6 to render,
-then **File → Export → STL**.
+Opened in [OpenSCAD](https://openscad.org) (free), pressing F5 renders the
+default `PART = "assembly"`: the closed camera standing upright, with dummy
+lenses/screen/button for a quick layout sanity-check. Setting `PART` to
+`"front"` or `"back"` and pressing F6 renders a shell for export via
+**File → Export → STL**.
 
-**Before printing anything:** measure your actual delivered screen,
-camera modules, and Pi/UPS stack with calipers and update the
-`scr_*`, `cam_*`, and `pi_*` variables. Vendor drawings drift between
-hardware revisions; a 1 mm error in the screen cutout ruins a 10-hour print.
+The `scr_*`, `cam_*`, and `pi_*` variables hold the dimensions of the
+actual delivered screen, camera modules, and Pi/UPS stack, measured with
+calipers before any print. Vendor drawings drift between hardware
+revisions, and a 1 mm error in the screen cutout ruins a 10-hour print.
 
 ## Printing without owning a printer
 
-- **Public library / school makerspace** — many offer free or at-cost
-  prints; this body fits most 220×220 mm beds diagonally, or reduce
-  `body_w` / print at a service with a larger bed.
-- **[Craftcloud](https://craftcloud3d.com)** — comparison marketplace for
-  print services; upload the STL, pick PETG.
-- **[JLC3DP](https://jlc3dp.com)** / **PCBWay** — cheap, good quality,
-  ~1 week shipping.
+- **Public library or school makerspace.** Many offer free or at-cost
+  prints. This body fits most 220×220 mm beds diagonally, or `body_w` can
+  be reduced to print at a service with a larger bed.
+- **[Craftcloud](https://craftcloud3d.com)** is a comparison marketplace
+  for print services; upload the STL and pick PETG.
+- **[JLC3DP](https://jlc3dp.com)** and **PCBWay** are cheap, good quality,
+  and ship in about a week.
 
-Recommended settings: **PETG** (more heat-tolerant than PLA — the Pi 5
+Recommended settings: **PETG** (more heat-tolerant than PLA, and the Pi 5
 runs warm), 0.2 mm layers, 4 perimeters, 25 % infill.
 
 **Orientation:** print both shells open-side down (cosmetic face up)

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 510" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
-  <title>WiggleCam system wiring diagram — see hardware/wiring.md</title>
+  <title>WiggleCam system wiring diagram (see hardware/wiring.md)</title>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#57606a"/>

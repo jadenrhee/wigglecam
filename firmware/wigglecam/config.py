@@ -15,8 +15,8 @@ STITCHED_STILL_SIZE = (4656, 3496)
 STITCHED_PREVIEW_SIZE = (1280, 960)
 
 # Maps stitched-frame quadrant index [TL, TR, BL, BR] to the physical
-# left-to-right position of that camera in the enclosure. If your ribbon
-# routing swaps two cameras, fix it here instead of re-cabling.
+# left-to-right position of that camera in the enclosure. A ribbon-routing
+# swap between two cameras is remapped here instead of re-cabling.
 CAM_ORDER = [0, 1, 2, 3]
 
 # ------------------------------------------------------------------- GPIO ---
