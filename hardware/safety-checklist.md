@@ -7,7 +7,7 @@ X1202's BMS handles over-current, over-voltage, over-discharge, and
 reverse-cell protection in hardware). What remains is low-voltage
 (≤5.1 V) work, but lithium cells still demand respect.
 
-## Batteries (the only serious hazard in this build)
+## Batteries (the one serious hazard left in this build)
 
 - 18650s are sourced only from a reputable specialist dealer; counterfeit
   cells are the #1 fire risk in DIY builds.

@@ -8,11 +8,11 @@ Supply: Geekworm X1202, 5.1 V, 5 A max continuous (25.5 W).
 |------|---------|-----------|----------|
 | Pi 5 (4 cores busy, Wi-Fi AP on) | 1.2 A | 2.4 A | continuous |
 | Active cooler | 0.1 A | 0.15 A | continuous |
-| Camarray HAT + 4× IMX519 | 0.3 A | 0.4 A | continuous |
+| Camarray HAT + 4x IMX519 | 0.3 A | 0.4 A | continuous |
 | 4.3" DSI display | 0.25 A | 0.3 A | continuous |
-| Flash (2× XP-G3 @ 1 A) | 0 | 2.0 A | ≤150 ms pulse |
+| Flash (2x XP-G3 @ 1 A) | 0 | 2.0 A | 150 ms max pulse |
 | **Total continuous** | **~1.9 A (9.7 W)** | **3.25 A (16.6 W)** | |
-| **Total during flash pulse** | | **5.25 A** | ≤150 ms |
+| **Total during flash pulse** | | **5.25 A** | 150 ms max |
 
 ## The flash transient
 
@@ -34,10 +34,11 @@ inside spec. Two independent mitigations are still in place:
 
 ## Runtime estimate
 
-4 × Samsung 35E: 4 × 3500 mAh × 3.6 V ≈ **50 Wh**.
-At the ~9.7 W typical draw and ~85 % boost-converter efficiency:
+4x Samsung 35E: 4 x 3500 mAh x 3.6 V = about **50 Wh**.
+At the ~9.7 W typical draw and ~85% boost-converter efficiency:
 
-50 Wh × 0.85 / 9.7 W ≈ **4.4 hours** of continuous shooting per charge.
+50 Wh x 0.85 / 9.7 W = about **4.4 hours** of continuous shooting per
+charge.
 
 ## Charging
 

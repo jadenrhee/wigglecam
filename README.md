@@ -7,7 +7,8 @@ A touchscreen shows a live preview, filter carousel, and after every
 shot a QR code that opens the GIF straight on anyone's phone over the
 camera's own Wi-Fi hotspot.
 
-> Status: design + firmware complete, hardware build in progress.
+> Status: design and firmware are done. Next step is ordering parts
+> and building it.
 
 <p align="center">
   <img src="docs/images/enclosure_front.png" width="49%" alt="Enclosure, front: four bezeled lenses, grip, top-plate shutter and filter buttons">
@@ -42,9 +43,9 @@ and the camera-sync trigger, all exposed to the Pi over I2C/UART.
   <img src="docs/images/pcb_layout.svg" width="49%" alt="PCB routing: front copper red, back copper blue">
 </p>
 
-The schematic is code ([hardware/skidl/](https://github.com/jadenrhee/wigglecam-controller/tree/main/hardware/skidl));
-the routing view above shows front copper in red and back copper in
-blue, with the ground/power planes hidden for readability.
+The routing view above shows front copper in red and back copper in
+blue, with the ground/power planes hidden so you can actually see the
+traces.
 
 ## Repo layout
 
@@ -55,9 +56,9 @@ blue, with the ground/power planes hidden for readability.
 | [hardware/power-budget.md](hardware/power-budget.md) | load table, flash-transient math, 4.4 h runtime estimate |
 | [hardware/safety-checklist.md](hardware/safety-checklist.md) | battery, electrical, and thermal safety design |
 | [firmware/](firmware/) | Python app: capture, filters, alignment, GIF export, share server, touch UI |
-| [enclosure/](enclosure/) | parametric OpenSCAD body + printing guide (no printer needed) |
+| [enclosure/](enclosure/) | parametric OpenSCAD body + printing guide (you don't need to own a printer) |
 
-## Key design choices
+## Design choices, short version
 
 - **LED flash, not xenon.** No 300 V charge circuit in a handheld
   perfboard build, and an LED pulse also makes flash/exposure sync trivial.

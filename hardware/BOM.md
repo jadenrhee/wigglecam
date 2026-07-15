@@ -16,7 +16,8 @@ screen, one 5.1 V/5 A battery HAT rated for exactly what the Pi 5 needs.
 | 5 | [Geekworm X1202 UPS HAT](https://geekworm.com/products/x1202) | 1 | $37 | 5.1 V/5 A output (the Pi 5's full requirement), onboard BMS with over-current/over-voltage/reverse-cell protection, mounts underneath so camera/display ports stay free |
 | 6 | 18650 cells, flat-top unprotected, ≥8 A rated (Samsung 35E / Molicel M35A) | 4 | $28 | X1202 bay fits max 65.3 mm, so protected cells are too long; the X1202's own BMS provides protection. Sourced from a reputable dealer (18650BatteryStore, IMR), never marketplace no-names |
 | 7 | microSD 64 GB, A2 class | 1 | $12 | OS + captures |
-| 8 | Raspberry Pi Active Cooler | 1 | $6 | Pi 5 throttles without it inside an enclosure |
+| 8 | Raspberry Pi Active Cooler | 1 | $6 | the Pi 5 throttles without it inside a closed case |
+| 9 | Cree XP-G3 (or XP-G2) LED on 20 mm star board | 2 | $8 | flash LEDs, about 500 lm each at a 1 A pulse. Needed in both versions |
 
 ## Flash circuit (hand-soldered on perfboard; see wiring.md)
 
@@ -30,17 +31,29 @@ screen, one 5.1 V/5 A battery HAT rated for exactly what the Pi 5 needs.
 | 14 | Polyfuse (PTC), 3 A hold | 1 | $1 | Protects the flash branch wiring on a fault |
 | 15 | Perfboard 50×70 mm, JST-XH connectors, 20 AWG silicone wire, heat-shrink | 1 set | $12 | |
 
-## Controls, assembly, enclosure
+## Flash + controls: v1 perfboard version
 
 | # | Part | Qty | ~Price | Notes |
 |---|------|-----|--------|-------|
-| 16 | 12 mm momentary pushbutton (shutter + filter) | 2 | $4 | |
-| 17 | M3 heat-set inserts + M3×10, M2×6 self-tap, M2.5×16 standoffs, M3×8 | kit | $12 | See enclosure/README.md |
-| 18 | 1/4-20 hex nut (tripod mount) + epoxy | 1 | $2 | |
-| 19 | Panel-mount USB-C extension (charging port) | 1 | $8 | Routes X1202's USB-C input to the case wall |
-| 20 | Enclosure print, PETG (print service) | 2 shells | $30 | See enclosure/README.md for services |
+| 13 | IRLZ44N logic-level N-MOSFET, TO-220 | 1 | $2 | fully on at a 3.3 V gate; our 2 A is nothing next to its 47 A rating |
+| 14 | 2.2 Ω 5 W wirewound resistor | 2 | $2 | sets ~1 A per LED; each one dissipates 2.2 W during the pulse |
+| 15 | 100 Ω 1/4 W (gate series), 100 kΩ 1/4 W (gate pulldown) | 1+1 | $1 | the pulldown keeps the flash OFF while the Pi boots |
+| 16 | 2200 µF 10 V low-ESR electrolytic | 2 | $4 | local reservoir, supplies the 2 A pulse so the 5 V rail doesn't sag |
+| 17 | Polyfuse (PTC), 3 A hold | 1 | $1 | protects the flash wiring if something shorts |
+| 18 | Perfboard 50x70 mm, JST-XH connectors, 20 AWG silicone wire, heat-shrink | - | $12 | |
+| 19 | 12 mm momentary pushbutton (shutter + filter) | 2 | $4 | |
 
-**Total: roughly $550.**
+## Controls, assembly, enclosure (both versions)
+
+| # | Part | Qty | ~Price | Notes |
+|---|------|-----|--------|-------|
+| 20 | M3 heat-set inserts + M3x10, M2x6 self-tap, M2.5x16 standoffs, M3x8 | kit | $12 | see enclosure/README.md |
+| 21 | 1/4-20 hex nut (tripod mount) + epoxy | 1 | $2 | |
+| 22 | Panel-mount USB-C extension (charging port) | 1 | $8 | brings the X1202's USB-C input out to the case wall |
+| 23 | Enclosure print, PETG (print service) | 2 shells | $30 | see enclosure/README.md for services |
+
+Total: about $620 for a v2 build, about $550 for v1.
+
 
 ## Compatibility cross-check (why these work together)
 

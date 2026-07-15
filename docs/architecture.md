@@ -1,6 +1,9 @@
 # Architecture
 
-## What a wigglegram needs, and how each need drove a decision
+I started from what a wigglegram actually needs and let each
+requirement pick the hardware. This doc walks through that reasoning,
+then covers the electronics, the data flow, and what I'd still like to
+fix.
 
 **1. Four views of the same instant.** If the four exposures are even a
 few ms apart, anything moving (people, hair, leaves) ghosts between
@@ -19,11 +22,13 @@ inspired it. Frames are auto-aligned on the subject in software
 (`wiggle.py`, phase correlation on a center crop) so the subject holds
 still and the background does the wiggling.
 
-**3. Flash synchronized to the exposure.** Because the flash is LED,
-not xenon, there is no microsecond trigger problem: firmware simply
-holds the LEDs on for a ~120 ms window that brackets the capture
-(`flash.py`), with a hardware-independent watchdog cap so no bug can
-leave 2 A flowing.
+**2. A wide enough baseline.** The 3-D effect comes from the lenses
+being horizontally offset from each other. The enclosure spaces the
+four modules 40 mm apart, 120 mm from the first lens to the last,
+similar to the Nishika N8000 film camera this is based on. In
+software I align the four frames on the subject (`wiggle.py`, phase
+correlation on a center crop), so the subject stays put and the
+background does the wiggling.
 
 **4. Handheld power.** The Pi 5 demands 5 V/5 A, beyond what generic power
 banks and boost boards provide. The Geekworm X1202 (4×18650, BMS, 5.1 V/5 A) is
@@ -41,20 +46,20 @@ Android, no app install.
 ```
 4x IMX519 ─(hw sync)─▶ Camarray HAT ─CSI─▶ Picamera2
                                             ├── lores stream ─▶ Qt live preview (touch UI)
-                                            └── still capture (4656×3496, flash bracketed)
-                                                  └▶ split 2×2 ─▶ filter ─▶ align ─▶
+                                            └── still capture (4656x3496, flash bracketed)
+                                                  └▶ split 2x2 ─▶ filter ─▶ align ─▶
                                                       ├▶ 4x JPEG stills
                                                       └▶ bounce GIF ─▶ Flask gallery ─▶ QR ─▶ phone
 ```
 
 ## Firmware layout
 
-| Module | Responsibility |
-|--------|----------------|
+| Module | What it does |
+|--------|--------------|
 | `config.py` | every tunable in one place |
-| `camera.py` | Picamera2 setup, stitched capture, 2×2 split |
-| `flash.py` | MOSFET gate control, watchdog-capped pulse |
-| `filters.py` | pure-function looks (B&W, sepia, vivid, film) |
+| `camera.py` | Picamera2 setup, stitched capture, 2x2 split |
+| `flash.py` | flash pulse control (v1 GPIO gate today; v2 I2C client planned) |
+| `filters.py` | the filter looks (B&W, sepia, vivid, film), all pure functions |
 | `wiggle.py` | subject alignment, bounce sequencing, GIF/JPEG export |
 | `share.py` | hotspot gallery server + QR generation |
 | `app.py` | Qt touch UI, buttons, capture orchestration |

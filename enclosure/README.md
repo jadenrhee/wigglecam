@@ -1,9 +1,10 @@
 # Enclosure
 
-Parametric OpenSCAD body in [wigglecam_body.scad](wigglecam_body.scad),
-styled like a wide compact camera: raised top/bottom plates, bezeled
-lens rings, a hand grip on the photographer's right, a shutter button
-on the top plate, a flash window, and a raised screen bezel on the back.
+The body is parametric OpenSCAD, all in
+[wigglecam_body.scad](wigglecam_body.scad). It's styled like a wide
+compact camera: raised top and bottom plates, bezeled lens rings, a
+hand grip on the photographer's right, a shutter button on the top
+plate, a flash window, and a raised screen bezel on the back.
 
 Opened in [OpenSCAD](https://openscad.org) (free), pressing F5 renders the
 default `PART = "assembly"`: the closed camera standing upright, with dummy
@@ -30,15 +31,16 @@ Recommended settings: **PETG** (more heat-tolerant than PLA, and the Pi 5
 runs warm), 0.2 mm layers, 4 perimeters, 25 % infill.
 
 **Orientation:** print both shells open-side down (cosmetic face up)
-with supports enabled. The raised lens bezels, grip, and plates mean
-the shells no longer sit flat face-down; supports end up inside the
-shell where the marks don't show.
+with supports on. The raised lens bezels, grip, and plates mean the
+shells don't sit flat face-down anymore, and this way the support
+marks end up inside the shell where nobody sees them.
 
-## Hardware for assembly
+## Assembly hardware
 
-- 6× M3 heat-set brass inserts + M3×10 screws (join the shells)
-- 16× M2×6 self-tapping screws (camera modules)
-- 4× M2.5×16 standoff screws (Pi 5 + X1202 stack)
-- 4× M3×8 screws (screen)
-- 1× 1/4-20 hex nut, epoxied into the bottom pocket (tripod mount)
-- White PETG or frosted acrylic scrap behind the flash window as a diffuser
+- 6x M3 heat-set brass inserts + M3x10 screws (join the shells)
+- 16x M2x6 self-tapping screws (camera modules)
+- 4x M2.5x16 standoff screws (Pi 5 + X1202 stack)
+- 4x M3x8 screws (screen)
+- 1x 1/4-20 hex nut, epoxied into the bottom pocket (tripod mount)
+- a scrap of white PETG or frosted acrylic behind the flash window as
+  a diffuser
