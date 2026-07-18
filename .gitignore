@@ -9,3 +9,6 @@ captures/
 !docs/img/*.jpg
 *.stl
 .DS_Store
+
+# private working notes
+NOTES.md

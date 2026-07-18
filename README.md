@@ -7,9 +7,6 @@ A touchscreen shows a live preview, filter carousel, and after every
 shot a QR code that opens the GIF straight on anyone's phone over the
 camera's own Wi-Fi hotspot.
 
-> Status: design and firmware are done. Next step is ordering parts
-> and building it.
-
 <p align="center">
   <img src="docs/images/enclosure_front.png" width="49%" alt="Enclosure, front: four bezeled lenses, grip, top-plate shutter and filter buttons">
   <img src="docs/images/enclosure_back.png" width="49%" alt="Enclosure, back: 4.3 inch touchscreen">
@@ -21,10 +18,11 @@ Four 16 MP camera modules sit 40 mm apart behind the faceplate. An
 Arducam Camarray HAT clocks all four sensors together and merges them
 into a single 2×2-stitched frame over one CSI cable. Because the four
 sensors share one clock, the exposures all land at the same instant,
-which is what keeps moving subjects from ghosting. Firmware splits the frame, auto-aligns
-the views on the subject (phase correlation), applies the selected
-filter, and writes a bounce-looped GIF. Full reasoning for every
-design decision: [docs/architecture.md](docs/architecture.md).
+which is what keeps moving subjects from ghosting. Firmware splits the
+frame, auto-aligns the views on the subject (phase correlation),
+applies the selected filter, and writes a bounce-looped GIF. Full
+reasoning for every design decision:
+[docs/architecture.md](docs/architecture.md).
 
 ![System wiring diagram](docs/images/system_diagram.svg)
 
@@ -32,7 +30,7 @@ design decision: [docs/architecture.md](docs/architecture.md).
 
 [wigglecam-controller](https://github.com/jadenrhee/wigglecam-controller)
 is the camera's RP2040 co-processor board: it sits between the Pi 5 and
-the physical hardware and handles the real-time and analog work:
+the physical hardware and handles the real-time and analog work —
 constant-current LED flash driving with hardware-enforced safety
 limits, shutter debounce, rotary-encoder decoding, battery telemetry,
 and the camera-sync trigger, all exposed to the Pi over I2C/UART.
@@ -43,9 +41,8 @@ and the camera-sync trigger, all exposed to the Pi over I2C/UART.
   <img src="docs/images/pcb_layout.svg" width="49%" alt="PCB routing: front copper red, back copper blue">
 </p>
 
-The routing view above shows front copper in red and back copper in
-blue, with the ground/power planes hidden so you can actually see the
-traces.
+Right-hand view is the signal routing: front copper in red, back copper
+in blue, planes hidden so the traces are legible.
 
 ## Repo layout
 
@@ -78,11 +75,3 @@ echo 'dtoverlay=imx519,cam0' | sudo tee -a /boot/firmware/config.txt && sudo reb
 nmcli device wifi hotspot ssid WiggleCam password <choose-one>
 cd firmware && python3 -m wigglecam.app
 ```
-
-## Build notes
-
-I worked out the electronics and firmware on the bench and wrote up the
-verification, wiring, and safety notes as I went, so the docs track the
-decisions I actually made. Assembly, bring-up, and debugging are all
-hands-on; see [hardware/](hardware/) for the wiring guide and safety
-checklist.
