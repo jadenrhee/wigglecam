@@ -1,8 +1,8 @@
 # WiggleCam
 
 A handheld camera with four synchronized lenses. They fire at the same
-instant, and the four views become a bouncing 3-D "wigglegram" GIF — a
-digital version of the Nishika N8000. Touchscreen for preview and filters,
+time, and the four views become a bouncing 3-D "wigglegram" GIF: a
+digital version of the Nishika N8000 (a camera I want myself). Touchscreen for preview and filters,
 and a QR code after each shot that opens the GIF on any phone over the
 camera's own hotspot.
 
