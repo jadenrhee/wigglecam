@@ -1,8 +1,8 @@
 """WiggleCam main application.
 
-Touch UI on the 4.3" DSI screen: live preview from the leftmost camera
-(cropped out of the stitched lores stream), filter carousel, shutter,
-and a QR overlay after each shot for instant phone download.
+Touch UI on the 4.3" DSI screen: live preview of the stitched 2x2
+lores stream (all four views at once), filter carousel, shutter, and
+a QR overlay after each shot for instant phone download.
 
 Run on the Pi:  python3 -m wigglecam.app
 """
@@ -28,6 +28,7 @@ except ImportError:
 
 class WiggleCamWindow(QtWidgets.QMainWindow):
     shot_saved = QtCore.pyqtSignal(str)   # gif filename, emitted off-thread
+    mode_pressed = QtCore.pyqtSignal()    # hardware mode button, off-thread
 
     def __init__(self):
         super().__init__()
@@ -50,9 +51,13 @@ class WiggleCamWindow(QtWidgets.QMainWindow):
         self.shutter_btn.when_pressed = self.trigger_capture
         self.mode_btn = Button(config.PIN_MODE, pull_up=True,
                                bounce_time=0.05)
-        self.mode_btn.when_pressed = self.next_filter
+        # gpiozero fires callbacks on its own thread and Qt widgets are
+        # GUI-thread-only, so hop through a queued signal (same pattern
+        # as shot_saved) instead of calling next_filter directly.
+        self.mode_btn.when_pressed = lambda: self.mode_pressed.emit()
 
         self.shot_saved.connect(self._show_qr)
+        self.mode_pressed.connect(self.next_filter)
 
     # ----------------------------------------------------------------- UI --
     def _build_ui(self):

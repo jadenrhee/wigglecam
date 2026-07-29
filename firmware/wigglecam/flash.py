@@ -31,9 +31,17 @@ class Flash:
                 self._out.off()          # always turns off, even on error
 
     def fire_around(self, capture_fn):
-        """Turn the flash on, run the capture callable, turn it off.
-        A watchdog timer forces the flash off at FLASH_MAX_PULSE_S even
-        if capture_fn hangs."""
+        """Bracket a capture with the flash: LED on, run the capture
+        callable, LED off when it returns.
+
+        capture_fn must return a frame exposed *after* it was called --
+        QuadCamera.capture_stitched does this with flush=True -- so the
+        frame starts exposing with the flash already lit. A watchdog
+        forces the flash off at FLASH_MAX_PULSE_S even if capture_fn
+        hangs; that hard cap always wins over frame coverage, so a
+        pipeline slower than the cap can lose the flash toward the end
+        of readout. Runs on the capture worker thread, never the Qt UI
+        thread, so blocking in capture_fn is fine."""
         watchdog = threading.Timer(config.FLASH_MAX_PULSE_S, self._out.off)
         with self._lock:
             self._out.on()

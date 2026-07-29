@@ -30,23 +30,34 @@ def align_views(views: list[np.ndarray]) -> list[np.ndarray]:
     ref_idx = 1
     ref = cv2.cvtColor(_center_crop(views[ref_idx]), cv2.COLOR_RGB2GRAY)
     ref = np.float32(ref)
+    # Hanning window keeps phaseCorrelate stable on low-texture crops
+    # (sky, plain walls), where the raw spectrum returns garbage shifts.
+    win = cv2.createHanningWindow((ref.shape[1], ref.shape[0]), cv2.CV_32F)
     out = []
+    shifts = [0.0]
     for i, v in enumerate(views):
         if i == ref_idx:
             out.append(v)
             continue
         g = np.float32(cv2.cvtColor(_center_crop(v), cv2.COLOR_RGB2GRAY))
-        (dx, dy), _ = cv2.phaseCorrelate(ref, g)
+        (dx, dy), _ = cv2.phaseCorrelate(ref, g, win)
+        shifts += [abs(dx), abs(dy)]
         m = np.float32([[1, 0, -dx], [0, 1, -dy]])
         shifted = cv2.warpAffine(v, m, (v.shape[1], v.shape[0]),
                                  borderMode=cv2.BORDER_REPLICATE)
         out.append(shifted)
-    return _common_crop(out)
+    # Margin must exceed the largest applied shift or the replicated
+    # borders show: at the ~1.5 m portrait distance the outer views
+    # shift ~50-100 px, so a fixed margin doesn't cut it.
+    margin = max(32, int(np.ceil(max(shifts))) + 8)
+    return _common_crop(out, margin)
 
 
-def _common_crop(views: list[np.ndarray], margin: int = 32) -> list[np.ndarray]:
-    """Trim edges so replicated borders from the shifts never show."""
+def _common_crop(views: list[np.ndarray], margin: int) -> list[np.ndarray]:
+    """Trim edges by the largest applied shift (padded) so replicated
+    borders never show."""
     h, w = views[0].shape[:2]
+    margin = min(margin, (min(h, w) - 2) // 2)   # never crop to nothing
     return [v[margin:h - margin, margin:w - margin] for v in views]
 
 
@@ -76,6 +87,8 @@ def save_wigglegram(views: list[np.ndarray],
 
     seq = bounce_sequence(frames)
     gif_path = shot_dir / f"wiggle_{stamp}.gif"
+    # GIF stores frame delays in whole centiseconds; GIF_FPS is chosen
+    # so the period (80 ms) survives that quantization exactly.
     seq[0].save(gif_path, save_all=True, append_images=seq[1:],
-                duration=int(1000 / config.GIF_FPS), loop=0)
+                duration=round(1000 / config.GIF_FPS), loop=0)
     return gif_path

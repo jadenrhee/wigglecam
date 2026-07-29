@@ -19,7 +19,7 @@ Python firmware drives today.
 | Shutter / mode | buttons on GPIO 17/27, debounced in software | shutter button + rotary encoder into the controller, RC + firmware debounce |
 | Capture sync | software timing only | controller pulses Pi GPIO 17 once the flash is at current |
 | Battery telemetry | X1202 fuel gauge (I2C 0x36) | X1202 fuel gauge, plus an in-line INA219 monitor on the controller |
-| Pi connection | 3 GPIO lines + I2C | one 2x6 socket on header pins 1-12: I2C slave **0x17**, UART as fallback |
+| Pi connection | 3 GPIO lines + I2C | one 2x6 socket on header pins 1-12: I2C slave **0x17** (UART pins wired on the header, unused by the firmware) |
 | Pi-side firmware | works today (`gpiozero`) | I2C client still to be written; register map is in the controller's [protocol doc](https://github.com/jadenrhee/wigglecam-controller/blob/main/docs/protocol.md) |
 
 Heads up: the two versions are **mutually exclusive on the header**.
@@ -48,7 +48,7 @@ sync on 17, event line on 18). Build one or the other, not both.
       ▲ USB-C (panel-mount) - charge input     └──────┬───────┘
                                                       │ 2x6 socket:
                                                       │ 5 V + GND down,
-                                                      │ I2C 0x17 (UART fallback),
+                                                      │ I2C 0x17,
                                                       │ sync -> GPIO17, ATTN -> GPIO18
   top-plate ─── SHUTTER JST ──▶ ┌─────────────────────┴────────────────┐
   shutter button                │      RP2040 camera controller        │
@@ -74,22 +74,31 @@ tall stacking header, so these pins stay reachable.
 | 3, 5 | SDA, SCL (GPIO 2/3) | controller is I2C slave **0x17** at 400 kHz; the Pi 5's onboard 1.8 kΩ pullups serve the bus |
 | 6, 9 | GND | common ground |
 | 7 | GPIO 4 | spare, unused |
-| 8 | GPIO 14 (TXD) | Pi TX to controller RX, the UART fallback link (330 Ω in series) |
-| 10 | GPIO 15 (RXD) | controller TX to Pi RX (330 Ω in series) |
+| 8 | GPIO 14 (TXD) | Pi TX to controller RX — wired, unused by the current firmware (330 Ω in series) |
+| 10 | GPIO 15 (RXD) | controller TX to Pi RX — wired, unused by the current firmware (330 Ω in series) |
 | 11 | GPIO 17 | **capture sync, into the Pi.** Pulses high when a trigger fires; the capture loop waits on this edge |
 | 12 | GPIO 18 | **ATTN, into the Pi.** High while a button/encoder event is waiting; the Pi can poll it or take an interrupt |
 
 One shared Pi I2C bus, three different addresses, no conflicts:
 Camarray HAT control, X1202 fuel gauge (0x36), controller (0x17).
 
-### Off-board connections (all JST-XH)
+### Off-board connections
 
-| Connector | Goes to | Notes |
-|-----------|---------|-------|
-| LED1, LED2 | one Cree XP-G3 star each | constant-current sinks, so **no ballast resistors**. Current is set per shot over I2C (`FLASH_PCT`) |
-| SHUTTER | top-plate shutter button | has a TVS (surge protector) diode at the connector, since this line leaves the enclosure |
-| VBAT_IN | X1202 5 V output | pack feed in |
-| VBAT_OUT | Pi 5 V pins | pack feed out, through the 10 mΩ shunt the INA219 reads. This is how the controller knows real system voltage and current |
+Signal-level runs use JST-XH. The pack feed does **not**: an XH contact
+is rated 3 A, and this path carries the full system current — 3.25 A
+worst-case continuous, 5.25 A during a flash pulse (power-budget.md) —
+so VBAT_IN/VBAT_OUT get XT30 connectors (or a screw-terminal block if
+you'd rather not crimp). Note the current controller board rev lands
+this path on JST-XH footprints (J5/J6) — leave those unpopulated and
+use their solder-jumper bypass to hard-wire XT30 pigtails, per the
+controller partlist.
+
+| Connector | Type | Goes to | Notes |
+|-----------|------|---------|-------|
+| LED1, LED2 | JST-XH | one Cree XP-G3 star each | constant-current sinks, so **no ballast resistors**. Current is set per shot over I2C (`FLASH_PCT`) |
+| SHUTTER | JST-XH | top-plate shutter button | has a TVS (surge protector) diode at the connector, since this line leaves the enclosure |
+| VBAT_IN | XT30 | X1202 5 V output | pack feed in |
+| VBAT_OUT | XT30 | Pi 5 V pins | pack feed out, through the 10 mΩ shunt the INA219 reads. This is how the controller knows real system voltage and current |
 
 The filter/mode selector is the rotary encoder **on the controller
 board itself** (the knob pokes through the enclosure wall). v1's

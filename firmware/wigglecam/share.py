@@ -5,11 +5,11 @@ do the next-best thing that works on every phone: the camera runs a
 Wi-Fi hotspot and a tiny web gallery; the touchscreen shows a QR code
 that opens the latest wigglegram directly on the phone.
 
-Enable the hotspot once with NetworkManager (see docs/wiring.md):
+Enable the hotspot once with NetworkManager (see hardware/wiring.md):
   nmcli device wifi hotspot ssid WiggleCam password <yourpass>
 """
 
-import io
+import socket
 import threading
 
 import qrcode
@@ -26,6 +26,21 @@ _PAGE = """<!doctype html><meta name=viewport content="width=device-width">
   <img src="/shot/{{name}}" style="max-width:95vw;border-radius:8px">
 {% endfor %}
 </body>"""
+
+
+def _local_ip() -> str:
+    """The address the phone should dial. Connecting a UDP socket picks
+    the outbound interface without sending a single packet, and
+    getsockname() reads the source IP the kernel chose: 10.42.0.1 when
+    the Pi runs the hotspot, its LAN address when it's joined to a
+    normal Wi-Fi network. Falls back to the NetworkManager AP-mode
+    default if there's no route at all."""
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            s.connect((config.HOTSPOT_IP, 1))
+            return s.getsockname()[0]
+    except OSError:
+        return config.HOTSPOT_IP
 
 
 class ShareServer:
@@ -60,7 +75,7 @@ class ShareServer:
         self._thread.start()
 
     def url(self, latest: str | None = None) -> str:
-        base = f"http://{config.HOTSPOT_IP}:{config.SHARE_PORT}/"
+        base = f"http://{_local_ip()}:{config.SHARE_PORT}/"
         return base + (f"shot/{latest}" if latest else "")
 
     def qr_image(self, latest: str | None = None):

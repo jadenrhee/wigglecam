@@ -39,7 +39,7 @@ decoding, battery telemetry, and camera sync, over I2C/UART to the Pi.
 |------|----------|
 | [hardware/BOM.md](hardware/BOM.md) | bill of materials (~$550) |
 | [hardware/wiring.md](hardware/wiring.md) | block diagram, GPIO map, assembly order |
-| [hardware/power-budget.md](hardware/power-budget.md) | load table, flash transients, 4.4 h runtime |
+| [hardware/power-budget.md](hardware/power-budget.md) | load table, flash transients, 4.5 h runtime |
 | [hardware/safety-checklist.md](hardware/safety-checklist.md) | battery, electrical, thermal |
 | [firmware/](firmware/) | Python app: capture, filters, alignment, GIF, share server, UI |
 | [enclosure/](enclosure/) | parametric OpenSCAD body + printing guide |

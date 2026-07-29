@@ -22,20 +22,12 @@ inspired it. Frames are auto-aligned on the subject in software
 (`wiggle.py`, phase correlation on a center crop) so the subject holds
 still and the background does the wiggling.
 
-**2. A wide enough baseline.** The 3-D effect comes from the lenses
-being horizontally offset from each other. The enclosure spaces the
-four modules 40 mm apart, 120 mm from the first lens to the last,
-similar to the Nishika N8000 film camera this is based on. In
-software I align the four frames on the subject (`wiggle.py`, phase
-correlation on a center crop), so the subject stays put and the
-background does the wiggling.
-
-**4. Handheld power.** The Pi 5 demands 5 V/5 A, beyond what generic power
+**3. Handheld power.** The Pi 5 demands 5 V/5 A, beyond what generic power
 banks and boost boards provide. The Geekworm X1202 (4×18650, BMS, 5.1 V/5 A) is
 purpose-built for it and mounts under the Pi, keeping the top-side
 camera/display connectors free.
 
-**5. Instant sharing.** AirDrop is Apple-proprietary (AWDL) and not
+**4. Instant sharing.** AirDrop is Apple-proprietary (AWDL) and not
 implementable on a Pi. Instead the camera runs its own Wi-Fi hotspot
 and a small Flask gallery (`share.py`); after each shot the touchscreen
 shows a QR code that opens the GIF directly on any phone, iPhone or

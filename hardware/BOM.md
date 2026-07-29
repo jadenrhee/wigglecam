@@ -19,40 +19,35 @@ screen, one 5.1 V/5 A battery HAT rated for exactly what the Pi 5 needs.
 | 8 | Raspberry Pi Active Cooler | 1 | $6 | the Pi 5 throttles without it inside a closed case |
 | 9 | Cree XP-G3 (or XP-G2) LED on 20 mm star board | 2 | $8 | flash LEDs, about 500 lm each at a 1 A pulse. Needed in both versions |
 
-## Flash circuit (hand-soldered on perfboard; see wiring.md)
+## Flash + controls: v1 perfboard version (see wiring.md)
 
 | # | Part | Qty | ~Price | Notes |
 |---|------|-----|--------|-------|
-| 9 | Cree XP-G3 (or XP-G2) LED on 20 mm star MCPCB | 2 | $8 | ~500 lm each at 1 A pulse |
-| 10 | IRLZ44N logic-level N-MOSFET, TO-220 | 1 | $2 | Fully on at 3.3 V gate drive; 2 A load is far below its 47 A rating |
-| 11 | 2.2 Ω 5 W wirewound resistor | 2 | $2 | Sets ~1 A per LED branch; 2.2 W dissipation each during the pulse |
-| 12 | 100 Ω 1/4 W (gate series), 100 kΩ 1/4 W (gate pulldown) | 1+1 | $1 | Pulldown keeps flash OFF during boot |
-| 13 | 2200 µF 10 V low-ESR electrolytic | 2 | $4 | Reservoir that supplies the 2 A pulse so the 5 V rail doesn't sag |
-| 14 | Polyfuse (PTC), 3 A hold | 1 | $1 | Protects the flash branch wiring on a fault |
-| 15 | Perfboard 50×70 mm, JST-XH connectors, 20 AWG silicone wire, heat-shrink | 1 set | $12 | |
-
-## Flash + controls: v1 perfboard version
-
-| # | Part | Qty | ~Price | Notes |
-|---|------|-----|--------|-------|
-| 13 | IRLZ44N logic-level N-MOSFET, TO-220 | 1 | $2 | fully on at a 3.3 V gate; our 2 A is nothing next to its 47 A rating |
-| 14 | 2.2 Ω 5 W wirewound resistor | 2 | $2 | sets ~1 A per LED; each one dissipates 2.2 W during the pulse |
-| 15 | 100 Ω 1/4 W (gate series), 100 kΩ 1/4 W (gate pulldown) | 1+1 | $1 | the pulldown keeps the flash OFF while the Pi boots |
-| 16 | 2200 µF 10 V low-ESR electrolytic | 2 | $4 | local reservoir, supplies the 2 A pulse so the 5 V rail doesn't sag |
-| 17 | Polyfuse (PTC), 3 A hold | 1 | $1 | protects the flash wiring if something shorts |
-| 18 | Perfboard 50x70 mm, JST-XH connectors, 20 AWG silicone wire, heat-shrink | - | $12 | |
-| 19 | 12 mm momentary pushbutton (shutter + filter) | 2 | $4 | |
+| 10 | IRLZ44N logic-level N-MOSFET, TO-220 | 1 | $2 | fully on at a 3.3 V gate; our 2 A is nothing next to its 47 A rating |
+| 11 | 2.2 Ω 5 W wirewound resistor | 2 | $2 | sets ~1 A per LED; each one dissipates 2.2 W during the pulse |
+| 12 | 100 Ω 1/4 W (gate series), 100 kΩ 1/4 W (gate pulldown) | 1+1 | $1 | the pulldown keeps the flash OFF while the Pi boots |
+| 13 | 2200 µF 10 V low-ESR electrolytic | 2 | $4 | local reservoir; smooths the pulse's leading edge (what it can and can't do: power-budget.md) |
+| 14 | Polyfuse (PTC), 3 A hold | 1 | $1 | protects the flash wiring if something shorts |
+| 15 | Perfboard 50x70 mm, JST-XH connectors, 20 AWG silicone wire, heat-shrink | - | $12 | |
+| 16 | 12 mm momentary pushbutton (shutter + filter) | 2 | $4 | |
 
 ## Controls, assembly, enclosure (both versions)
 
 | # | Part | Qty | ~Price | Notes |
 |---|------|-----|--------|-------|
-| 20 | M3 heat-set inserts + M3x10, M2x6 self-tap, M2.5x16 standoffs, M3x8 | kit | $12 | see enclosure/README.md |
-| 21 | 1/4-20 hex nut (tripod mount) + epoxy | 1 | $2 | |
-| 22 | Panel-mount USB-C extension (charging port) | 1 | $8 | brings the X1202's USB-C input out to the case wall |
-| 23 | Enclosure print, PETG (print service) | 2 shells | $30 | see enclosure/README.md for services |
+| 17 | M3 heat-set inserts + M3x10, M2x6 self-tap, M2.5x16 standoffs, M3x8 | kit | $12 | see enclosure/README.md |
+| 18 | 1/4-20 hex nut (tripod mount) + epoxy | 1 | $2 | |
+| 19 | Panel-mount USB-C extension (charging port) | 1 | $8 | brings the X1202's USB-C input out to the case wall |
+| 20 | Enclosure print, PETG (print service) | 2 shells | $30 | see enclosure/README.md for services |
 
-Total: about $620 for a v2 build, about $550 for v1.
+Total: about **$550 for a v1 build** — the line items sum to $553
+($475 core + $26 flash/controls + $52 assembly/enclosure). A v2 build
+drops the perfboard flash section (items 10-15 plus one of item 16's
+two buttons — the top-plate shutter stays, −$24) and uses the
+[controller board](https://github.com/jadenrhee/wigglecam-controller)
+instead: $529 from this list, plus the controller's PCB fab and parts,
+priced per-part in its
+[partlist](https://github.com/jadenrhee/wigglecam-controller/blob/main/hardware/partlist.md).
 
 
 ## Compatibility cross-check (why these work together)
@@ -66,6 +61,7 @@ Total: about $620 for a v2 build, about $550 for v1.
   header via stacking header, and it only uses I2C + 3V3/5V/GND pins, leaving
   GPIO 17/18/27 free for our button, flash, and mode pins.
 - Flash draws from the X1202 5 V rail: worst-case system peak
-  (Pi ~2.4 A + display 0.3 A + cameras ~0.4 A + flash 2 A ≈ 5.1 A) is
-  covered for the 120 ms pulse by the 4400 µF reservoir. Math in
-  power-budget.md.
+  (Pi 2.4 A + cooler 0.15 A + cameras 0.4 A + display 0.3 A + flash 2 A
+  = 5.25 A) runs ~5% over the 5 A rating for the ≤150 ms pulse. The
+  4400 µF reservoir only smooths the leading edge; the brief overload
+  itself rides on the X1202's headroom. Math in power-budget.md.

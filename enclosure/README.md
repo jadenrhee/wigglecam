@@ -20,8 +20,10 @@ revisions, and a 1 mm error in the screen cutout ruins a 10-hour print.
 ## Printing without owning a printer
 
 - **Public library or school makerspace.** Many offer free or at-cost
-  prints. This body fits most 220×220 mm beds diagonally, or `body_w` can
-  be reduced to print at a service with a larger bed.
+  prints. The 205 × 92 mm body fits a 220 × 220 mm bed straight-on. No
+  rotation squeezes it onto a 200 × 200 mm bed (unrotated 205 mm is
+  already the tightest bounding box), so for smaller beds reduce
+  `body_w` or use a service with a larger bed.
 - **[Craftcloud](https://craftcloud3d.com)** is a comparison marketplace
   for print services; upload the STL and pick PETG.
 - **[JLC3DP](https://jlc3dp.com)** and **PCBWay** are cheap, good quality,

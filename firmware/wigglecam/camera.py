@@ -25,8 +25,12 @@ class QuadCamera:
         self._configure()
 
     def _configure(self):
+        # Picamera2 naming quirk: format names follow little-endian DRM
+        # conventions, so "BGR888" is R,G,B byte order in memory (and
+        # "RGB888" would hand us B,G,R). Everything downstream (filters,
+        # PIL export) treats channel 0 as red, so ask for "BGR888".
         cfg = self.picam.create_still_configuration(
-            main={"size": config.STITCHED_STILL_SIZE, "format": "RGB888"},
+            main={"size": config.STITCHED_STILL_SIZE, "format": "BGR888"},
             lores={"size": config.STITCHED_PREVIEW_SIZE, "format": "YUV420"},
             display="lores",
             buffer_count=3,
@@ -41,8 +45,19 @@ class QuadCamera:
         self.picam.stop()
 
     def capture_stitched(self) -> np.ndarray:
-        """Grab one full-resolution stitched frame (H, W*4, 3)."""
-        return self.picam.capture_array("main")
+        """Grab one full-resolution stitched frame: a 2x2 grid of views,
+        shape (H, W, 3) = (3496, 4656, 3).
+
+        The camera free-runs for the preview, so the pipeline always
+        holds frames that were exposed *before* this call. flush=True
+        discards those and returns the first frame whose exposure
+        started after now -- which is what lets flash.fire_around()
+        guarantee the flash is already lit when the frame exposes."""
+        req = self.picam.capture_request(flush=True)
+        try:
+            return req.make_array("main")
+        finally:
+            req.release()
 
     @staticmethod
     def split(stitched: np.ndarray) -> list[np.ndarray]:
