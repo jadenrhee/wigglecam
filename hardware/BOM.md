@@ -63,5 +63,6 @@ priced per-part in its
 - Flash draws from the X1202 5 V rail: worst-case system peak
   (Pi 2.4 A + cooler 0.15 A + cameras 0.4 A + display 0.3 A + flash 2 A
   = 5.25 A) runs ~5% over the 5 A rating for the ≤150 ms pulse. The
-  4400 µF reservoir only smooths the leading edge; the brief overload
-  itself rides on the X1202's headroom. Math in power-budget.md.
+  local reservoir (4400 µF on v1; 940 µF on the v2 controller) only
+  smooths the leading edge; the brief overload itself rides on the
+  X1202's headroom. Math in power-budget.md.

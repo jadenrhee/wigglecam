@@ -90,8 +90,7 @@ worst-case continuous, 5.25 A during a flash pulse (power-budget.md) —
 so VBAT_IN/VBAT_OUT get XT30 connectors (or a screw-terminal block if
 you'd rather not crimp). Note the current controller board rev lands
 this path on JST-XH footprints (J5/J6) — leave those unpopulated and
-use their solder-jumper bypass to hard-wire XT30 pigtails, per the
-controller partlist.
+solder the XT30 pigtails straight into the J5/J6 through-holes.
 
 | Connector | Type | Goes to | Notes |
 |-----------|------|---------|-------|

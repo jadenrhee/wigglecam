@@ -75,7 +75,7 @@
     <text x="253" y="95">4x MIPI</text>
     <text x="513" y="95">22-pin CSI</text>
     <text x="515" y="205">22-pin DSI</text>
-    <text x="712" y="356" text-anchor="start">2x6 socket: I2C 0x17 + UART</text>
+    <text x="712" y="356" text-anchor="start">2x6 socket: I2C 0x17</text>
     <text x="712" y="372" text-anchor="start">sync → GPIO 17, ATTN → GPIO 18</text>
     <text x="528" y="441">JST</text>
     <text x="608" y="368" text-anchor="end" fill="#b3423a">5.1 V / 5 A</text>

@@ -25,7 +25,7 @@ correlation, applies a filter, and writes a bounce-looped GIF.
 
 [wigglecam-controller](https://github.com/jadenrhee/wigglecam-controller) is
 the RP2040 co-processor board: flash driving, shutter debounce, encoder
-decoding, battery telemetry, and camera sync, over I2C/UART to the Pi.
+decoding, battery telemetry, and camera sync, over I2C to the Pi.
 76 × 50 mm, 4-layer, DRC-clean.
 
 <p align="center">

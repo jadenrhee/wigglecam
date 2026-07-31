@@ -17,9 +17,10 @@ Supply: Geekworm X1202, 5.1 V, 5 A max continuous (25.5 W).
 ## The flash transient
 
 Worst-case draw during the pulse exceeds the X1202's 5 A continuous
-rating by ~0.25 A for ≤150 ms. The flash branch has **2× 2200 µF** of
-local reservoir capacitance, but honest math says the caps cannot
-bridge that excess: it amounts to 0.25 A × 0.15 s = 37.5 mC, while
+rating by ~0.25 A for ≤150 ms. The v1 perfboard flash branch has
+**2× 2200 µF** of local reservoir capacitance (the v2 controller board
+carries 2× 470 µF polymer, where the same conclusion holds even more
+strongly), but honest math says the caps cannot bridge that excess: it amounts to 0.25 A × 0.15 s = 37.5 mC, while
 4400 µF supplies only 4.4 mC per volt of allowed sag — about 12% of
 what's needed, or ~18 ms of the 150 ms pulse. Bridging the full pulse
 at 1 V of sag would take ~37,500 µF. So the reservoir's real job is
