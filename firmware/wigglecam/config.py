@@ -16,7 +16,7 @@ STITCHED_PREVIEW_SIZE = (1280, 960)
 
 # Reorder table applied after the 2x2 split: entry p is the stitched-frame
 # quadrant index (0 TL, 1 TR, 2 BL, 3 BR) of the camera at physical
-# left-to-right position p — camera.split() emits
+# left-to-right position p. camera.split() emits
 # [views[CAM_ORDER[0]], ..., views[CAM_ORDER[3]]]. A ribbon-routing swap
 # between two cameras is remapped here instead of re-cabling.
 CAM_ORDER = [0, 1, 2, 3]

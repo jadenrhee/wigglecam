@@ -30,8 +30,8 @@ camera/display connectors free.
 **4. Instant sharing.** AirDrop is Apple-proprietary (AWDL) and not
 implementable on a Pi. Instead the camera runs its own Wi-Fi hotspot
 and a small Flask gallery (`share.py`); after each shot the touchscreen
-shows a QR code that opens the GIF directly on any phone, iPhone or
-Android, no app install.
+shows a QR code that opens the GIF in any phone browser, iPhone or
+Android, with no app to install.
 
 ## Data flow
 
@@ -59,7 +59,7 @@ Android, no app install.
 ## Known limitations / future work
 
 - Quad synchronized mode caps each view at 2328×1748 (~4 MP). That's the
-  price of single-cable hardware sync, and it's plenty for GIFs.
+  price of single-cable hardware sync. It's enough for GIFs.
 - GIF export ~2-4 s on the Pi 5; an MP4 export path would be smaller
   files and faster.
 - Autofocus is per-kit (one focus setting for all four in sync mode);

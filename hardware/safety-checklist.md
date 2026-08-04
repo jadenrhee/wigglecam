@@ -4,8 +4,8 @@ This design deliberately avoids the two genuinely dangerous options for a
 DIY camera: **no xenon flash** (needs a ~300 V charge circuit, a real
 shock/burn hazard on perfboard) and **no raw/unmanaged LiPo packs** (the
 X1202's BMS handles over-current, over-voltage, over-discharge, and
-reverse-cell protection in hardware). What remains is low-voltage
-(≤5.1 V) work, but lithium cells still demand respect.
+reverse-cell protection in hardware). What's left is low-voltage
+(≤5.1 V) work, but lithium cells still need care.
 
 ## Batteries (the one serious hazard left in this build)
 

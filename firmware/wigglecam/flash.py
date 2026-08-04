@@ -34,8 +34,8 @@ class Flash:
         """Bracket a capture with the flash: LED on, run the capture
         callable, LED off when it returns.
 
-        capture_fn must return a frame exposed *after* it was called --
-        QuadCamera.capture_stitched does this with flush=True -- so the
+        capture_fn must return a frame exposed *after* it was called
+        (QuadCamera.capture_stitched does this with flush=True), so the
         frame starts exposing with the flash already lit. A watchdog
         forces the flash off at FLASH_MAX_PULSE_S even if capture_fn
         hangs; that hard cap always wins over frame coverage, so a

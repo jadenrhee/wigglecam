@@ -2,7 +2,7 @@
 
 The four lenses sit a few centimetres apart, so the views are shifted
 relative to each other. For the 3-D "wiggle" to read well, the frames
-must be aligned on the *subject*: the subject then stays put while the
+must be aligned on the *subject*, which then stays put while the
 background parallax-shifts around it. align_views() does this with
 phase correlation on a centre crop (where the subject usually is).
 """

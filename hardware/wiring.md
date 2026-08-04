@@ -74,22 +74,23 @@ tall stacking header, so these pins stay reachable.
 | 3, 5 | SDA, SCL (GPIO 2/3) | controller is I2C slave **0x17** at 400 kHz; the Pi 5's onboard 1.8 kΩ pullups serve the bus |
 | 6, 9 | GND | common ground |
 | 7 | GPIO 4 | spare, unused |
-| 8 | GPIO 14 (TXD) | Pi TX to controller RX — wired, unused by the current firmware (330 Ω in series) |
-| 10 | GPIO 15 (RXD) | controller TX to Pi RX — wired, unused by the current firmware (330 Ω in series) |
+| 8 | GPIO 14 (TXD) | Pi TX to controller RX, wired but unused by the current firmware (330 Ω in series) |
+| 10 | GPIO 15 (RXD) | controller TX to Pi RX, wired but unused by the current firmware (330 Ω in series) |
 | 11 | GPIO 17 | **capture sync, into the Pi.** Pulses high when a trigger fires; the capture loop waits on this edge |
 | 12 | GPIO 18 | **ATTN, into the Pi.** High while a button/encoder event is waiting; the Pi can poll it or take an interrupt |
 
-One shared Pi I2C bus, three different addresses, no conflicts:
-Camarray HAT control, X1202 fuel gauge (0x36), controller (0x17).
+Three devices share the Pi's one I2C bus at different addresses, so
+nothing collides: Camarray HAT control, X1202 fuel gauge (0x36), and
+the controller (0x17).
 
 ### Off-board connections
 
-Signal-level runs use JST-XH. The pack feed does **not**: an XH contact
-is rated 3 A, and this path carries the full system current — 3.25 A
-worst-case continuous, 5.25 A during a flash pulse (power-budget.md) —
+Signal-level runs use JST-XH. The pack feed does **not**. An XH contact
+is rated 3 A and this path carries the full system current, 3.25 A
+worst-case continuous and 5.25 A during a flash pulse (power-budget.md),
 so VBAT_IN/VBAT_OUT get XT30 connectors (or a screw-terminal block if
 you'd rather not crimp). Note the current controller board rev lands
-this path on JST-XH footprints (J5/J6) — leave those unpopulated and
+this path on JST-XH footprints (J5/J6). Leave those unpopulated and
 solder the XT30 pigtails straight into the J5/J6 through-holes.
 
 | Connector | Type | Goes to | Notes |
@@ -97,7 +98,7 @@ solder the XT30 pigtails straight into the J5/J6 through-holes.
 | LED1, LED2 | JST-XH | one Cree XP-G3 star each | constant-current sinks, so **no ballast resistors**. Current is set per shot over I2C (`FLASH_PCT`) |
 | SHUTTER | JST-XH | top-plate shutter button | has a TVS (surge protector) diode at the connector, since this line leaves the enclosure |
 | VBAT_IN | XT30 | X1202 5 V output | pack feed in |
-| VBAT_OUT | XT30 | Pi 5 V pins | pack feed out, through the 10 mΩ shunt the INA219 reads. This is how the controller knows real system voltage and current |
+| VBAT_OUT | XT30 | Pi 5 V pins | pack feed out, through the 10 mΩ shunt the INA219 reads for real system voltage and current |
 
 The filter/mode selector is the rotary encoder **on the controller
 board itself** (the knob pokes through the enclosure wall). v1's
@@ -111,8 +112,8 @@ Short version: power the board from USB-C first (the flash rail is
 intentionally dead on USB power), flash `camctrl.uf2` over BOOTSEL,
 check that `i2cdetect -y 1` on the Pi shows 0x17, and bench-test the
 flash sinks at 1 A per branch with a current probe **before** the LEDs
-get connected. One quirk of this board revision: don't press BOOTSEL
-while it's running.
+get connected. On this board revision, don't press BOOTSEL while it's
+running.
 
 **Firmware status:** `firmware/wigglecam` currently drives the v1
 electronics directly (`gpiozero`). The v2 I2C client (trigger, flash
@@ -124,9 +125,9 @@ written. The full register map is in the controller repo's
 
 ## v1: direct-GPIO perfboard build
 
-The original electronics: everything hangs straight off the Pi header.
-No PCB order needed, and the current Python firmware supports it
-as-is.
+In the original electronics everything hangs straight off the Pi
+header. No PCB order needed, and the current Python firmware supports
+it as-is.
 
 ### System block diagram
 
@@ -202,7 +203,7 @@ The build comes up incrementally, each stage verified before the next is added:
 3. **Display:** connects to DISP1 with the Pi-5-specific cable, driver-free
    on Bookworm, touch verified.
 4. **Flash board:** soldered per the schematic on perfboard and bench-tested
-   alone before it meets the Pi: powered from a bench/USB 5 V source, the
+   alone before it connects to the Pi: powered from a bench/USB 5 V source, the
    gate driven from 3.3 V through a resistor, ~1 A per branch confirmed with
    a multimeter in series, and the LEDs confirmed OFF with the gate floating
    (pulldown working).
@@ -220,4 +221,4 @@ The build comes up incrementally, each stage verified before the next is added:
    `nmcli device wifi hotspot ssid WiggleCam password <chosen>`.
 9. **Enclosure:** only after everything works on the bench. Heat-set inserts
    go in, the stack seats, ribbons fold (never creased sharply), flash and
-   button wiring get zip-tie strain relief, and it closes up.
+   button wiring get zip-tie strain relief, then the shells close.

@@ -20,21 +20,21 @@ Worst-case draw during the pulse exceeds the X1202's 5 A continuous
 rating by ~0.25 A for ≤150 ms. The v1 perfboard flash branch has
 **2× 2200 µF** of local reservoir capacitance (the v2 controller board
 carries 2× 470 µF polymer, where the same conclusion holds even more
-strongly), but honest math says the caps cannot bridge that excess: it amounts to 0.25 A × 0.15 s = 37.5 mC, while
-4400 µF supplies only 4.4 mC per volt of allowed sag — about 12% of
-what's needed, or ~18 ms of the 150 ms pulse. Bridging the full pulse
-at 1 V of sag would take ~37,500 µF. So the reservoir's real job is
-smaller: it feeds the LED turn-on edge and keeps the
-pulse's fast di/dt off the wiring. For the body of a worst-case pulse
-the X1202 itself runs ~5% over its "max continuous" rating for under
-150 ms — a brief overload I'm leaning on supply headroom for, with a
-momentary rail droop possible, not something the caps absorb. Two
-things bound the risk:
+strongly), but honest math says the caps cannot bridge that excess. It
+amounts to 0.25 A × 0.15 s = 37.5 mC, while 4400 µF supplies only
+4.4 mC per volt of allowed sag, about 12% of what's needed, or ~18 ms
+of the 150 ms pulse. Bridging the full pulse at 1 V of sag would take
+~37,500 µF. So the reservoir's real job is smaller. It feeds the LED
+turn-on edge and keeps the pulse's fast di/dt off the wiring. For the
+body of a worst-case pulse the X1202 itself runs ~5% over its "max
+continuous" rating for under 150 ms. That is a brief overload I'm
+leaning on supply headroom for, with a momentary rail droop possible,
+not something the caps absorb. Two things bound the risk:
 
 1. Firmware hard-caps the pulse at 150 ms (`flash.py`, enforced with a
    watchdog even if the capture call hangs), and the worst case is
    synthetic: the Pi's measured draw during a capture is ~1.5 A, not
-   2.4 A, which puts the realistic pulse total near 4.35 A — inside
+   2.4 A, which puts the realistic pulse total near 4.35 A, inside
    the rating with margin.
 2. If `vcgencmd get_throttled` ever reads ≠ 0x0 after flash shots,
    dropping the branch resistors to 2.7 Ω (≈0.8 A/LED) resolves it, still

@@ -2,7 +2,7 @@
 
 Touch UI on the 4.3" DSI screen: live preview of the stitched 2x2
 lores stream (all four views at once), filter carousel, shutter, and
-a QR overlay after each shot for instant phone download.
+a QR overlay after each shot for downloading to a phone.
 
 Run on the Pi:  python3 -m wigglecam.app
 """

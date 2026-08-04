@@ -1,9 +1,10 @@
 # Bill of Materials
 
 Prices are approximate (mid-2026, USD) and drift over time.
-Every part below was chosen so the whole chain is plug-compatible:
-one CSI port for all four synchronized cameras, one DSI port for the
-screen, one 5.1 V/5 A battery HAT rated for exactly what the Pi 5 needs.
+Every part below was chosen so the whole chain is plug-compatible. All
+four synchronized cameras run off one CSI port, the screen off the DSI
+port, and the 5.1 V/5 A battery HAT is rated for exactly what the Pi 5
+needs.
 
 ## Core electronics
 
@@ -40,10 +41,10 @@ screen, one 5.1 V/5 A battery HAT rated for exactly what the Pi 5 needs.
 | 19 | Panel-mount USB-C extension (charging port) | 1 | $8 | brings the X1202's USB-C input out to the case wall |
 | 20 | Enclosure print, PETG (print service) | 2 shells | $30 | see enclosure/README.md for services |
 
-Total: about **$550 for a v1 build** — the line items sum to $553
+Total: about **$550 for a v1 build**. The line items sum to $553
 ($475 core + $26 flash/controls + $52 assembly/enclosure). A v2 build
 drops the perfboard flash section (items 10-15 plus one of item 16's
-two buttons — the top-plate shutter stays, −$24) and uses the
+two buttons; the top-plate shutter stays, −$24) and uses the
 [controller board](https://github.com/jadenrhee/wigglecam-controller)
 instead: $529 from this list, plus the controller's PCB fab and parts,
 priced per-part in its

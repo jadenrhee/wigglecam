@@ -51,8 +51,8 @@ class QuadCamera:
         The camera free-runs for the preview, so the pipeline always
         holds frames that were exposed *before* this call. flush=True
         discards those and returns the first frame whose exposure
-        started after now -- which is what lets flash.fire_around()
-        guarantee the flash is already lit when the frame exposes."""
+        started after now, so flash.fire_around() can guarantee the
+        flash is already lit when the frame exposes."""
         req = self.picam.capture_request(flush=True)
         try:
             return req.make_array("main")

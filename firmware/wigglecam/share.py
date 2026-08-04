@@ -1,9 +1,9 @@
 """Phone sharing without AirDrop.
 
-AirDrop is Apple-proprietary (AWDL) and cannot be spoken by a Pi, so we
-do the next-best thing that works on every phone: the camera runs a
-Wi-Fi hotspot and a tiny web gallery; the touchscreen shows a QR code
-that opens the latest wigglegram directly on the phone.
+AirDrop is Apple-proprietary (AWDL) and can't be implemented on a Pi,
+so sharing goes over HTTP instead. The camera runs a Wi-Fi hotspot and
+a tiny web gallery, and the touchscreen shows a QR code that opens the
+latest wigglegram on the phone.
 
 Enable the hotspot once with NetworkManager (see hardware/wiring.md):
   nmcli device wifi hotspot ssid WiggleCam password <yourpass>
